@@ -430,17 +430,17 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   countBadge: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     borderWidth: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
   },
   countBadgeText: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 12,
+    fontWeight: '600',
   },
   topicDivider: {
     height: 1,
