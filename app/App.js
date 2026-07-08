@@ -4,6 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import DgShipping from './src/screens/DgShipping';
 import DgProblemSolver from './src/screens/DgProblemSolver';
+import DGSOrders from './src/screens/DGS orders';
 
 export default function App() {
   const [screen, setScreen] = useState('DGShipping');
@@ -20,6 +21,8 @@ export default function App() {
 
         {screen === 'DGProblemSolver' ? (
           <DgProblemSolver navigation={navigation} />
+        ) : screen === 'DGSOrders' ? (
+          <DGSOrders navigation={navigation} />
         ) : (
           <DgShipping navigation={navigation} />
         )}

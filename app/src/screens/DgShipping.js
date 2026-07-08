@@ -37,7 +37,7 @@ const SERVICES = [
     description:
       'Stay updated with the latest DG circulars, notices, and shipping updates.',
     onPress: (navigation) => {
-      // navigation?.navigate('LatestCirculars');
+      navigation?.navigate('DGSOrders');
     },
   },
 ];
