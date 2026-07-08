@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "MMD Exam App",
+    "slug": "mmd-exam-app",
+    "version": "1.0.0",
+    "sdkVersion": "54.0.0",
+    "platforms": ["ios", "android", "web"],
+    "assetBundlePatterns": ["**/*"]
+  }
+}

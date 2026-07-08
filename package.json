@@ -1,0 +1,28 @@
+{
+  "name": "mmd-exam-fullstack",
+  "private": true,
+  "main": "expo/AppEntry.js",
+  "workspaces": [
+    "api",
+    "app"
+  ],
+  "scripts": {
+    "bootstrap": "npm install",
+    "start": "npm run dev:app",
+    "dev:api": "cd api && npm run dev",
+    "dev:app": "cd app && npm start",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:app\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "overrides": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-web": "0.21.2"
+  },
+  "dependencies": {
+    "metro": "0.82.0"
+  }
+}
