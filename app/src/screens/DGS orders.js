@@ -10,7 +10,43 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
+const ACCENT_COLOR = '#6495ED';
+
+const COLORS = {
+  bg: '#F8FAFC',
+  surface: '#FFFFFF',
+  surfaceSoft: '#F1F5F9',
+  border: '#E2E8F0',
+
+  // Premium blue outline that compliments primary #6495ED
+  premiumBorder: 'rgba(37, 99, 235, 0.30)',
+  premiumBorderSoft: 'rgba(100, 149, 237, 0.24)',
+
+  text: '#0F172A',
+  muted: '#64748B',
+  mutedLight: '#94A3B8',
+  green: '#16A34A',
+  greenSoft: '#F0FDF4',
+  blueSoft: '#EFF6FF',
+};
+
+const SOFT_SHADOW = {
+  shadowColor: '#0F172A',
+  shadowOffset: { width: 0, height: 8 },
+  shadowOpacity: 0.07,
+  shadowRadius: 18,
+  elevation: 3,
+};
+
+const TINY_SHADOW = {
+  shadowColor: '#0F172A',
+  shadowOffset: { width: 0, height: 4 },
+  shadowOpacity: 0.05,
+  shadowRadius: 10,
+  elevation: 2,
+};
 
 const CIRCULARS_DATA = {
   2026: [
@@ -21,7 +57,7 @@ const CIRCULARS_DATA = {
     { id: 'c32', number: '32 of 2026', title: 'Commencement of Seat Booking for Nautical Grade Competency Written Examinations – July 2026', date: '24 Jun 2026', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c31', number: '31 of 2026', title: 'Precautionary Measures for Indian Seafarers in view of the Heightened Security Situation in the Gulf Region – reg.', date: '13 Jun 2026', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c29', number: '29 of 2026', title: 'Instructions regarding mandatory submission of FAL Forms through Maritime Single Window (MSW) System.', date: '08 Jun 2026', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
-    { id: 'c28', number: '28 of 2026', title: 'Operationalisation of Oral Examination Booking on New Examination Portal for Candidates Whose Written Examination Results Were Declared in M...', date: '01 Jun 2026', isNew: false, isRead: true, offlineSaved: false, pdfUrl: '#' },
+    { id: 'c28', number: '28 of 2026', title: 'Operationalisation of Oral Examination Booking on New  Examination  Portal   for   Candidates   Whose   Written   Examination   Results   Were   Declared   in       M...', date: '01 Jun 2026', isNew:true, isRead:false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c27', number: '27 of 2026', title: 'Operationalisation of Oral Examination Booking on New Examination Portal for ASM (FG & NCV), Chief Mate (FG) and Second Mate (FG)', date: '26 May 2026', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c25', number: '25 of 2026', title: 'Issuance of Electro-Technical Rating Certificate of Proficiency & progression to ETO certification, reg.', date: '19 May 2026', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c26', number: '26 of 2026', title: 'Introduction of a six-month competency course for Deck Ratings to qualify for the Second Mate (Foreign Going) Certificate of Competency Exami...', date: '19 May 2026', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
@@ -41,7 +77,7 @@ const CIRCULARS_DATA = {
   ],
   2025: [
     { id: 'c55_25', number: '55 of 2025', title: 'Seafarers Advisory on Avoiding Fraud, Cheating and Unauthorized Recruitment during Employment', date: '11 Dec 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
-    { id: 'c56_25', number: '56 of 2025', title: 'Introduction of Revised Form-I (RPSL- for Indian seafarers working on foreign flag vessels). Form-IA (RPSL/Indian ship owner – for Indian seafarers wo...', date: '11 Dec 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
+    { id: 'c56_25', number: '56 of 2025', title: 'Introduction  of  Revised  Form-I  (RPSL  -  for  Indian  seafarers  working  on  foreign  flag  vessels).  Form -        IA (RPSL/Indian ship owner – for Indian seafarers wo...', date: '11 Dec 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c46_25', number: '46 of 2025', title: 'Collision / Contact damage between Manta Nigar and Jag Radha at P and V anchorage, Mumbai on 02.08.2025', date: '07 Oct 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c43_25', number: '43 of 2025', title: 'Prevention of Forged Entries in Continuous Discharge Certificates (CDCs) by RPSL Agents / Shipping Companies /Seafarers - reg', date: '01 Oct 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c42_25', number: '42 of 2025', title: 'Death of seafarer due to fall from Crane Cabin', date: '30 Sept 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
@@ -49,7 +85,7 @@ const CIRCULARS_DATA = {
     { id: 'c39_25', number: '39 of 2025', title: "Welfare Schemes Administered by Seafarers' Welfare Fund Society (SWFS) for Indian Seafarers", date: '18 Sept 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c36_25', number: '36 of 2025', title: 'Revised Course Curriculum for NWKO (NCV) Course', date: '10 Sept 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'crew_25', type: 'notice', label: 'Crew Annual', title: 'Crew Annual Report 2024-2025', date: '25 Aug 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
-    { id: 'c31_25', number: '31 of 2025', title: 'Mandatory compliance measures to prevent engagement of Seafarers without appropriate training and demonstratable competence prior is...', date: '18 Jul 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
+    { id: 'c31_25', number: '31 of 2025', title: 'Mandatory  compliance  measures  to  prevent  engagement of Seafarers without appropriate               training  and  demonstratable  competence prior is...', date: '18 Jul 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c29_25', number: '29 of 2025', title: 'Commencement of Nautical Grade Examination at MMD Visakhapatnam', date: '12 Jul 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c26_25', number: '26 of 2025', title: 'Entry into force of the Hong Kong International Convention for the Safe and Environmentally Sound Recycling of Ships, 2009', date: '26 May 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
     { id: 'c24_25', number: '24 of 2025', title: 'Revised course Curriculum for Second Mate Foundation course', date: '21 May 2025', isNew: true, isRead: false, offlineSaved: false, pdfUrl: '#' },
@@ -80,28 +116,34 @@ export default function DGSCircularsScreen({ navigation, onBack, onHome }) {
     else navigation?.goBack?.();
   };
 
-  const toggleYear = (year) => {
+  const toggleYear = year => {
     setExpandedYears(prev => ({ ...prev, [year]: !prev[year] }));
   };
 
-  const toggleBookmark = (id) => {
+  const toggleBookmark = id => {
     setBookmarks(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const toggleOfflinePopover = (id) => {
+  const toggleOfflinePopover = id => {
     setActiveOfflinePopover(prev => (prev === id ? null : id));
   };
 
-  const getFilteredCirculars = (circulars) => {
-    return circulars.filter(c => {
-      if (activeTab === 'bookmarked') return !!bookmarks[c.id];
-      if (activeTab === 'unread') return !c.isRead;
-      return true;
-    }).filter(c => {
-      if (!searchQuery.trim()) return true;
-      const q = searchQuery.toLowerCase();
-      return c.title.toLowerCase().includes(q) || (c.number || '').toLowerCase().includes(q) || (c.label || '').toLowerCase().includes(q);
-    });
+  const getFilteredCirculars = circulars => {
+    return circulars
+      .filter(c => {
+        if (activeTab === 'bookmarked') return !!bookmarks[c.id];
+        if (activeTab === 'unread') return !c.isRead;
+        return true;
+      })
+      .filter(c => {
+        if (!searchQuery.trim()) return true;
+        const q = searchQuery.toLowerCase();
+        return (
+          c.title.toLowerCase().includes(q) ||
+          (c.number || '').toLowerCase().includes(q) ||
+          (c.label || '').toLowerCase().includes(q)
+        );
+      });
   };
 
   const years = Object.keys(CIRCULARS_DATA).map(Number).sort((a, b) => b - a);
@@ -109,36 +151,40 @@ export default function DGSCircularsScreen({ navigation, onBack, onHome }) {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle="light-content" backgroundColor="#080C10" />
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={handleBack} activeOpacity={0.75}>
-          <Ionicons name="arrow-back" size={20} color="#FFFFFF" />
+          <Ionicons name="arrow-back" size={20} color={COLORS.text} />
         </TouchableOpacity>
+
         <View style={styles.headerTextWrap}>
           <Text style={styles.headerTitle}>DGS Orders & Circulars</Text>
           <Text style={styles.headerSubtitle}>DG Shipping</Text>
         </View>
+
         <View style={styles.headerSpacer} />
       </View>
 
       <View style={styles.searchWrap}>
         <View style={[styles.searchBar, isFocused && styles.searchBarFocused]}>
           <View style={styles.searchIconCircle}>
-            <Ionicons name="search" size={15} color="#FFFFFF" />
+            <Ionicons name="search" size={16} color="#FFFFFF" />
           </View>
+
           <TextInput
             style={styles.searchInput}
             placeholder="Search circular title or month..."
-            placeholderTextColor="#4A5568"
+            placeholderTextColor={COLORS.mutedLight}
             value={searchQuery}
             onChangeText={setSearchQuery}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />
+
           {searchQuery.length > 0 && (
             <TouchableOpacity onPress={() => setSearchQuery('')} style={styles.clearBtn}>
-              <Ionicons name="close-circle" size={18} color="#4A5568" />
+              <Ionicons name="close-circle" size={18} color={COLORS.mutedLight} />
             </TouchableOpacity>
           )}
         </View>
@@ -163,16 +209,15 @@ export default function DGSCircularsScreen({ navigation, onBack, onHome }) {
         ))}
       </View>
 
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {activeTab === 'bookmarked' && hasNoBookmarks ? (
           <View style={styles.emptyState}>
             <View style={styles.emptyIconWrap}>
-              <Ionicons name="bookmark-outline" size={34} color="#4A5568" />
+              <Ionicons name="bookmark-outline" size={34} color={COLORS.mutedLight} />
             </View>
+
             <Text style={styles.emptyTitle}>No bookmarks yet</Text>
+
             <Text style={styles.emptySubtitle}>
               Tap the bookmark icon on any circular to save it here.
             </Text>
@@ -182,7 +227,9 @@ export default function DGSCircularsScreen({ navigation, onBack, onHome }) {
             const circulars = getFilteredCirculars(CIRCULARS_DATA[year]);
             const isExpanded = expandedYears[year];
 
-            if ((activeTab === 'bookmarked' || activeTab === 'unread') && circulars.length === 0) return null;
+            if ((activeTab === 'bookmarked' || activeTab === 'unread') && circulars.length === 0) {
+              return null;
+            }
 
             return (
               <View key={year}>
@@ -193,116 +240,118 @@ export default function DGSCircularsScreen({ navigation, onBack, onHome }) {
                 >
                   <View style={styles.yearLeft}>
                     <View style={styles.yearIconWrap}>
-                      <Ionicons name="time-outline" size={13} color="#4C8DFF" />
+                      <Ionicons name="time-outline" size={13} color={ACCENT_COLOR} />
                     </View>
+
                     <Text style={styles.yearText}>{year}</Text>
                   </View>
+
                   <View style={styles.yearRight}>
                     <View style={styles.yearCountBadge}>
                       <Text style={styles.yearCountText}>
-                        {activeTab === 'all'
-                          ? CIRCULARS_DATA[year].length
-                          : circulars.length}
+                        {activeTab === 'all' ? CIRCULARS_DATA[year].length : circulars.length}
                       </Text>
                     </View>
+
                     <Text style={styles.yearCountLabel}>circulars</Text>
+
                     <Ionicons
                       name={isExpanded ? 'chevron-up' : 'chevron-down'}
                       size={15}
-                      color="#4A5568"
+                      color={COLORS.mutedLight}
                       style={{ marginLeft: 6 }}
                     />
                   </View>
                 </TouchableOpacity>
 
-                {isExpanded && circulars.map((item) => (
-                  <View
-                    key={item.id}
-                    style={[
-                      styles.card,
-                      item.isNew && styles.cardNew,
-                    ]}
-                  >
-                    <View style={styles.cardTopRow}>
-                      <View style={styles.cardBadgesRow}>
-                        {item.number ? (
-                          <View style={styles.numberBadge}>
-                            <Text style={styles.numberBadgeText}>{item.number}</Text>
-                          </View>
-                        ) : (
-                          <View style={styles.neutralLabelBadge}>
-                            <Text style={styles.neutralLabelBadgeText}>{item.label}</Text>
-                          </View>
-                        )}
+                {isExpanded &&
+                  circulars.map(item => (
+                    <View key={item.id} style={styles.card}>
+                      <View style={styles.cardTopRow}>
+                        <View style={styles.cardBadgesRow}>
+                          {item.number ? (
+                            <View style={styles.numberBadge}>
+                              <Text style={styles.numberBadgeText}>{item.number}</Text>
+                            </View>
+                          ) : (
+                            <View style={styles.neutralLabelBadge}>
+                              <Text style={styles.neutralLabelBadgeText}>{item.label}</Text>
+                            </View>
+                          )}
 
-                        {item.isNew && (
-                          <View style={styles.newBadge}>
-                            <View style={styles.newDot} />
-                            <Text style={styles.newBadgeText}>New</Text>
-                          </View>
-                        )}
+                          {item.isNew && (
+                            <View style={styles.newBadge}>
+                              <View style={styles.newDot} />
+                              <Text style={styles.newBadgeText}>New</Text>
+                            </View>
+                          )}
+                        </View>
+
+                        <View style={styles.cardDateRow}>
+                          <Ionicons name="calendar-outline" size={12} color={COLORS.mutedLight} />
+
+                          <Text style={styles.dateText}>{item.date}</Text>
+
+                          {item.offlineSaved && (
+                            <View style={styles.offlineIconWrap}>
+                              <TouchableOpacity
+                                onPress={() => toggleOfflinePopover(item.id)}
+                                style={styles.offlineIconBtn}
+                                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                                activeOpacity={0.8}
+                              >
+                                <Ionicons name="cloud-done-outline" size={15} color={COLORS.green} />
+                              </TouchableOpacity>
+
+                              {activeOfflinePopover === item.id && (
+                                <View style={styles.offlinePopoverAnchor}>
+                                  <View style={styles.offlinePopover}>
+                                    <View style={styles.offlinePopoverArrow} />
+                                    <Text style={styles.offlinePopoverText}>Saved offline</Text>
+                                  </View>
+                                </View>
+                              )}
+                            </View>
+                          )}
+
+                          <TouchableOpacity
+                            onPress={() => toggleBookmark(item.id)}
+                            style={styles.bookmarkBtn}
+                            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                          >
+                            <Ionicons
+                              name={bookmarks[item.id] ? 'bookmark' : 'bookmark-outline'}
+                              size={17}
+                              color={bookmarks[item.id] ? ACCENT_COLOR : COLORS.mutedLight}
+                            />
+                          </TouchableOpacity>
+                        </View>
                       </View>
 
-                      <View style={styles.cardDateRow}>
-                        <Ionicons name="calendar-outline" size={12} color="#4A5568" />
-                        <Text style={styles.dateText}>{item.date}</Text>
+                      <Text
+                        style={[styles.cardTitle, !item.isNew && styles.cardTitleRead]}
+                        numberOfLines={3}
+                        ellipsizeMode="tail"
+                      >
+                        {item.title}
+                      </Text>
 
-                        {item.offlineSaved && (
-                          <View style={styles.offlineIconWrap}>
-                            <TouchableOpacity
-                              onPress={() => toggleOfflinePopover(item.id)}
-                              style={styles.offlineIconBtn}
-                              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                              activeOpacity={0.8}
-                            >
-                              <Ionicons name="cloud-done-outline" size={15} color="#22C55E" />
-                            </TouchableOpacity>
+                      <View style={styles.cardDivider} />
 
-                            {activeOfflinePopover === item.id && (
-                              <View style={styles.offlinePopoverAnchor}>
-                                <View style={styles.offlinePopover}>
-                                  <View style={styles.offlinePopoverArrow} />
-                                  <Text style={styles.offlinePopoverText}>Saved offline</Text>
-                                </View>
-                              </View>
-                            )}
-                          </View>
-                        )}
+                      <View style={styles.cardBtnsRow}>
+                        <TouchableOpacity style={styles.pdfBtn} activeOpacity={0.85}>
+                          <Ionicons name="document-text-outline" size={14} color="#FFFFFF" />
+                          <Text style={styles.pdfBtnText}>Open PDF</Text>
+                          <Ionicons name="open-outline" size={12} color="rgba(255,255,255,0.72)" />
+                        </TouchableOpacity>
 
-                        <TouchableOpacity
-                          onPress={() => toggleBookmark(item.id)}
-                          style={styles.bookmarkBtn}
-                          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                        >
-                          <Ionicons
-                            name={bookmarks[item.id] ? 'bookmark' : 'bookmark-outline'}
-                            size={17}
-                            color={bookmarks[item.id] ? '#4C8DFF' : '#4A5568'}
-                          />
+                        <TouchableOpacity style={styles.explainBtn} activeOpacity={0.85}>
+                          <MaterialCommunityIcons name="lightbulb-on-outline" size={16} color={COLORS.muted} />
+                          <Text style={styles.explainBtnText}>Read explanation</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
-
-                    <Text style={[styles.cardTitle, !item.isNew && styles.cardTitleRead]}>
-                      {item.title}
-                    </Text>
-
-                    <View style={styles.cardDivider} />
-
-                    <View style={styles.cardBtnsRow}>
-                      <TouchableOpacity style={styles.pdfBtn} activeOpacity={0.85}>
-                        <Ionicons name="document-text-outline" size={14} color="#FFFFFF" />
-                        <Text style={styles.pdfBtnText}>Open PDF</Text>
-                        <Ionicons name="open-outline" size={12} color="rgba(255,255,255,0.7)" />
-                      </TouchableOpacity>
-
-                      <TouchableOpacity style={styles.explainBtn} activeOpacity={0.85}>
-                        <Ionicons name="sparkles-outline" size={13} color="#94A3B8" />
-                        <Text style={styles.explainBtnText}>Read explanation</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                ))}
+                  ))}
               </View>
             );
           })
@@ -319,7 +368,7 @@ export default function DGSCircularsScreen({ navigation, onBack, onHome }) {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#080C10',
+    backgroundColor: COLORS.bg,
   },
 
   header: {
@@ -328,155 +377,200 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: (Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0) + 12,
     paddingBottom: 16,
+    backgroundColor: COLORS.surface,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.04)',
+    borderBottomColor: COLORS.border,
   },
+
   backButton: {
     width: 42,
     height: 42,
-    borderRadius: 21,
-    backgroundColor: '#111720',
+    borderRadius: 14,
+    backgroundColor: COLORS.surfaceSoft,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.06)',
+    borderColor: COLORS.border,
   },
-  headerSpacer: { width: 42, height: 42 },
-  headerTextWrap: { flex: 1, alignItems: 'center' },
+
+  headerSpacer: {
+    width: 42,
+    height: 42,
+  },
+
+  headerTextWrap: {
+    flex: 1,
+    alignItems: 'center',
+  },
+
   headerTitle: {
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontWeight: '800',
-    letterSpacing: -0.3,
+    color: COLORS.text,
+    fontSize: 18,
+    fontWeight: '900',
+    letterSpacing: -0.2,
   },
+
   headerSubtitle: {
-    color: '#4A5568',
+    color: COLORS.muted,
     fontSize: 12,
-    fontWeight: '500',
-    marginTop: 3,
-    letterSpacing: 0.2,
+    fontWeight: '700',
+    marginTop: 4,
   },
 
   searchWrap: {
     paddingHorizontal: 16,
-    paddingTop: 14,
+    paddingTop: 16,
     marginBottom: 12,
   },
+
   searchBar: {
+    height: 58,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#0E1420',
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.06)',
-    paddingRight: 12,
-    overflow: 'hidden',
+    backgroundColor: COLORS.surface,
+    borderRadius: 29,
+    borderWidth: 1.4,
+    borderColor: 'rgba(100, 149, 237, 0.30)',
+    paddingRight: 14,
+    ...SOFT_SHADOW,
   },
+
   searchBarFocused: {
-    borderColor: 'rgba(76,141,255,0.5)',
-    backgroundColor: '#111827',
+    borderColor: ACCENT_COLOR,
+    shadowColor: ACCENT_COLOR,
+    shadowOpacity: 0.15,
+    elevation: 5,
   },
+
   searchIconCircle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#12345C',
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: ACCENT_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 4,
-    marginRight: 10,
+    marginLeft: 8,
+    marginRight: 11,
   },
+
   searchInput: {
     flex: 1,
-    color: '#FFFFFF',
+    color: COLORS.text,
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '700',
     paddingVertical: 13,
   },
-  clearBtn: { padding: 2 },
+
+  clearBtn: {
+    padding: 4,
+  },
 
   tabsRow: {
     flexDirection: 'row',
     paddingHorizontal: 16,
     marginBottom: 16,
-    gap: 8,
+    gap: 9,
   },
+
   tab: {
     flex: 1,
-    paddingVertical: 9,
-    borderRadius: 22,
-    backgroundColor: '#0E1420',
+    paddingVertical: 11,
+    borderRadius: 15,
+    backgroundColor: COLORS.surface,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.06)',
+    borderColor: COLORS.border,
     alignItems: 'center',
+    ...TINY_SHADOW,
   },
+
   tabActive: {
-    backgroundColor: '#12345C',
-    borderColor: '#12345C',
+    backgroundColor: ACCENT_COLOR,
+    borderColor: ACCENT_COLOR,
   },
-  tabText: { color: '#4A5568', fontSize: 13, fontWeight: '600' },
-  tabTextActive: { color: '#FFFFFF', fontWeight: '700' },
+
+  tabText: {
+    color: COLORS.muted,
+    fontSize: 13,
+    fontWeight: '800',
+  },
+
+  tabTextActive: {
+    color: '#FFFFFF',
+  },
 
   scrollContent: {
     paddingHorizontal: 16,
-    paddingBottom: 100,
+    paddingBottom: 104,
   },
 
   emptyState: {
     alignItems: 'center',
-    marginTop: 80,
+    marginTop: 82,
     paddingHorizontal: 30,
   },
+
   emptyIconWrap: {
-    width: 84,
-    height: 84,
-    borderRadius: 22,
-    backgroundColor: '#0E1420',
+    width: 86,
+    height: 86,
+    borderRadius: 24,
+    backgroundColor: COLORS.surface,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 18,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
+    borderColor: COLORS.border,
+    ...SOFT_SHADOW,
   },
+
   emptyTitle: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: '700',
+    color: COLORS.text,
+    fontSize: 19,
+    fontWeight: '900',
     marginBottom: 8,
   },
+
   emptySubtitle: {
-    color: '#4A5568',
+    color: COLORS.muted,
     fontSize: 14,
     textAlign: 'center',
     lineHeight: 21,
+    fontWeight: '600',
   },
 
   yearRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#0E1420',
-    borderRadius: 14,
-    paddingHorizontal: 14,
-    paddingVertical: 13,
-    marginBottom: 10,
+    backgroundColor: COLORS.surface,
+    borderRadius: 18,
+    paddingHorizontal: 15,
+    paddingVertical: 14,
+    marginBottom: 12,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
+    borderColor: COLORS.border,
+    ...TINY_SHADOW,
   },
-  yearLeft: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+
+  yearLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+
   yearIconWrap: {
-    width: 26,
-    height: 26,
-    borderRadius: 8,
-    backgroundColor: 'rgba(76,141,255,0.12)',
+    width: 32,
+    height: 32,
+    borderRadius: 12,
+    backgroundColor: COLORS.blueSoft,
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   yearText: {
-    color: '#E2E8F0',
-    fontSize: 15,
-    fontWeight: '700',
-    letterSpacing: -0.2,
+    color: COLORS.text,
+    fontSize: 16,
+    fontWeight: '900',
   },
+
   yearRight: {
     flex: 1,
     flexDirection: 'row',
@@ -484,116 +578,134 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     gap: 6,
   },
+
   yearCountBadge: {
-    backgroundColor: 'rgba(76,141,255,0.15)',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 8,
+    backgroundColor: COLORS.blueSoft,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 999,
   },
+
   yearCountText: {
-    color: '#4C8DFF',
+    color: ACCENT_COLOR,
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '900',
   },
+
   yearCountLabel: {
-    color: '#4A5568',
+    color: COLORS.muted,
     fontSize: 13,
-    fontWeight: '500',
+    fontWeight: '700',
   },
 
   card: {
-    backgroundColor: '#0E1420',
-    borderRadius: 16,
-    padding: 15,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.05)',
-    overflow: 'hidden',
-  },
-  cardNew: {
-    borderColor: 'rgba(45,212,191,0.18)',
+    backgroundColor: COLORS.surface,
+    borderRadius: 22,
+    padding: 16,
+    marginBottom: 14,
+    overflow: 'visible',
+
+    borderWidth: 1.7,
+    borderColor: COLORS.premiumBorder,
+
+    shadowColor: '#2563EB',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.12,
+    shadowRadius: 22,
+    elevation: 6,
   },
 
   cardTopRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
-    marginBottom: 10,
-    paddingLeft: 6,
+    marginBottom: 13,
   },
+
   cardBadgesRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 7,
     flex: 1,
+    flexShrink: 1,
     flexWrap: 'wrap',
+    paddingRight: 8,
   },
+
   cardDateRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    marginLeft: 8,
+    flexShrink: 0,
+    paddingTop: 2,
   },
 
   numberBadge: {
-    paddingHorizontal: 9,
-    paddingVertical: 4,
-    borderRadius: 8,
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.09)',
+    paddingHorizontal: 11,
+    paddingVertical: 6,
+    borderRadius: 999,
+    backgroundColor: '#F8FBFF',
+    borderWidth: 1.2,
+    borderColor: COLORS.premiumBorderSoft,
   },
+
   numberBadgeText: {
-    color: '#94A3B8',
+    color: '#334155',
     fontSize: 11.5,
-    fontWeight: '600',
+    fontWeight: '900',
+    letterSpacing: 1.2,
   },
+
   neutralLabelBadge: {
-    paddingHorizontal: 9,
-    paddingVertical: 4,
-    borderRadius: 8,
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.09)',
+    paddingHorizontal: 11,
+    paddingVertical: 6,
+    borderRadius: 999,
+    backgroundColor: '#F8FBFF',
+    borderWidth: 1.2,
+    borderColor: COLORS.premiumBorderSoft,
   },
+
   neutralLabelBadgeText: {
-    color: '#94A3B8',
+    color: '#334155',
     fontSize: 11.5,
-    fontWeight: '600',
+    fontWeight: '900',
   },
 
   newBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 9,
-    paddingVertical: 4,
-    borderRadius: 8,
-    backgroundColor: 'rgba(34,197,94,0.1)',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 999,
+    backgroundColor: COLORS.greenSoft,
     borderWidth: 1,
-    borderColor: 'rgba(34,197,94,0.25)',
-    gap: 4,
+    borderColor: '#BBF7D0',
+    gap: 6,
   },
+
   newDot: {
-    width: 5,
-    height: 5,
-    borderRadius: 2.5,
-    backgroundColor: '#22C55E',
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+    backgroundColor: COLORS.green,
   },
+
   newBadgeText: {
-    color: '#22C55E',
+    color: COLORS.green,
     fontSize: 11.5,
-    fontWeight: '700',
+    fontWeight: '900',
   },
 
   dateText: {
-    color: '#4A5568',
+    color: COLORS.mutedLight,
     fontSize: 11.5,
-    fontWeight: '500',
-    marginLeft: 3,
+    fontWeight: '800',
+    marginLeft: 2,
   },
+
   bookmarkBtn: {
     marginLeft: 6,
-    padding: 2,
+    padding: 3,
   },
 
   offlineIconWrap: {
@@ -603,136 +715,151 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     zIndex: 30,
   },
+
   offlineIconBtn: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: 'rgba(34,197,94,0.08)',
-    borderWidth: 1,
-    borderColor: 'rgba(34,197,94,0.22)',
+    width: 27,
+    height: 27,
+    borderRadius: 10,
+    backgroundColor: COLORS.greenSoft,
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   offlinePopoverAnchor: {
     position: 'absolute',
-    top: 30,
-    left: -80,
+    top: 33,
+    left: -74,
     right: -46,
     zIndex: 50,
     alignItems: 'center',
   },
+
   offlinePopover: {
-    minWidth: 98,
+    minWidth: 112,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#101821',
+    backgroundColor: COLORS.surface,
     borderWidth: 1,
-    borderColor: 'rgba(34,197,94,0.28)',
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingVertical: 7,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 8,
+    borderColor: '#BBF7D0',
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderRadius: 12,
+    ...TINY_SHADOW,
   },
+
   offlinePopoverArrow: {
     position: 'absolute',
     top: -5,
     left: '50%',
     width: 10,
     height: 10,
-    backgroundColor: '#101821',
+    backgroundColor: COLORS.surface,
     borderLeftWidth: 1,
     borderTopWidth: 1,
-    borderColor: 'rgba(34,197,94,0.28)',
+    borderColor: '#BBF7D0',
     transform: [{ translateX: -5 }, { rotate: '45deg' }],
   },
+
   offlinePopoverText: {
-    color: '#22C55E',
+    color: COLORS.green,
     fontSize: 11.5,
-    fontWeight: '700',
+    fontWeight: '900',
     textAlign: 'center',
     includeFontPadding: false,
-     lineHeight: 14,
+    lineHeight: 14,
   },
 
   cardTitle: {
-    color: '#E2E8F0',
-    fontSize: 14.5,
-    fontWeight: '600',
-    lineHeight: 21,
-    paddingLeft: 6,
-    marginBottom: 12,
+    color: COLORS.text,
+    fontSize: 15.8,
+    fontWeight: '900',
+    lineHeight: 23.5,
+    marginBottom: 14,
+    letterSpacing: -0.15,
   },
+
   cardTitleRead: {
-    color: '#94A3B8',
-    fontWeight: '500',
+    color: '#788597',
+    fontWeight: '700',
   },
 
   cardDivider: {
     height: 1,
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    marginHorizontal: -15,
-    marginBottom: 12,
+    backgroundColor: '#D7E5FF',
+    marginHorizontal: -16,
+    marginBottom: 14,
   },
 
   cardBtnsRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingLeft: 6,
+    gap: 10,
   },
 
   pdfBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#12345C',
-    paddingHorizontal: 14,
-    paddingVertical: 9,
-    borderRadius: 22,
-    gap: 6,
-  },
-  pdfBtnText: {
-    color: '#FFFFFF',
-    fontSize: 13,
-    fontWeight: '700',
-  },
-
-  explainBtn: {
+    flex: 0,
+    width: 140,
+    minWidth: 44,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255,255,255,0.04)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.08)',
-    paddingHorizontal: 14,
+    backgroundColor: ACCENT_COLOR,
+    paddingHorizontal: 12,
     paddingVertical: 9,
-    borderRadius: 22,
+    borderRadius: 20,
+    gap: 6,
+    shadowColor: ACCENT_COLOR,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.22,
+    shadowRadius: 12,
+    elevation: 3,
+  },
+
+  pdfBtnText: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+
+  explainBtn: {
+    flex: 0,
+    width: 140,
+    minHeight: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.surfaceSoft,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    paddingHorizontal: 10,
+    paddingVertical: 9,
+    borderRadius: 20,
     gap: 5,
   },
+
   explainBtnText: {
-    color: '#94A3B8',
-    fontSize: 13,
-    fontWeight: '600',
+    color: '#64748B',
+    fontSize: 11.5,
+    fontWeight: '900',
+    flexShrink: 1,
+    textAlign: 'center',
   },
 
   fab: {
     position: 'absolute',
     bottom: 28,
     right: 20,
-    width: 54,
-    height: 54,
-    borderRadius: 27,
-    backgroundColor: '#12345C',
+    width: 56,
+    height: 56,
+    borderRadius: 18,
+    backgroundColor: ACCENT_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 10,
-    shadowColor: '#12345C',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.45,
-    shadowRadius: 10,
+    shadowColor: ACCENT_COLOR,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 18,
+    elevation: 6,
   },
 });

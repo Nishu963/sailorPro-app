@@ -17,8 +17,9 @@ const SERVICES = [
     iconLib: 'mci',
     icon: 'lifebuoy',
     gradientColors: ['#5B9DFF', '#246BFF'],
-    accentColor: '#5798FF',
-    borderColor: '#29456F',
+    accentColor: '#246BFF',
+    tintColor: '#EEF4FF',
+    borderColor: 'rgba(36, 107, 255, 0.45)',
     title: 'DG Problem Solver',
     description:
       'Solve DG doubts faster with structured guidance and AI-powered help.',
@@ -31,8 +32,9 @@ const SERVICES = [
     iconLib: 'ion',
     icon: 'document-text',
     gradientColors: ['#FF9A5C', '#F2672A'],
-    accentColor: '#FF914D',
-    borderColor: '#68402B',
+    accentColor: '#F2672A',
+    tintColor: '#FFF3EB',
+    borderColor: 'rgba(242, 103, 42, 0.45)',
     title: 'Latest Circulars',
     description:
       'Stay updated with the latest DG circulars, notices, and shipping updates.',
@@ -45,7 +47,7 @@ const SERVICES = [
 export default function DGShippingScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle="light-content" backgroundColor="#0A0E13" />
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
       <View style={styles.container}>
         <View style={styles.header}>
@@ -54,7 +56,7 @@ export default function DGShippingScreen({ navigation }) {
             onPress={() => navigation?.goBack?.()}
             activeOpacity={0.75}
           >
-            <Ionicons name="chevron-back" size={27} color="#FFFFFF" />
+            <Ionicons name="chevron-back" size={26} color="#12171E" />
           </TouchableOpacity>
 
           <View style={styles.headerTextWrap}>
@@ -73,6 +75,7 @@ export default function DGShippingScreen({ navigation }) {
               icon={service.icon}
               gradientColors={service.gradientColors}
               accentColor={service.accentColor}
+              tintColor={service.tintColor}
               borderColor={service.borderColor}
               title={service.title}
               description={service.description}
@@ -90,30 +93,28 @@ function ServiceCard({
   icon,
   gradientColors,
   accentColor,
+  tintColor,
   borderColor,
   title,
   description,
   onPress,
 }) {
   return (
-    <TouchableOpacity activeOpacity={0.88} onPress={onPress}>
-      <LinearGradient
-        colors={['#172231', '#101720']}
-        style={[styles.card, { borderColor }]}
-      >
-        <View style={[styles.cardGlow, { backgroundColor: accentColor }]} />
+    <TouchableOpacity activeOpacity={0.88} onPress={onPress} style={styles.cardShadowWrap}>
+      <View style={[styles.card, { borderColor }]}>
+        <View style={[styles.cardGlow, { backgroundColor: tintColor }]} />
 
         <View style={styles.topRow}>
           <LinearGradient
             colors={gradientColors}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            style={styles.iconBox}
+            style={[styles.iconBox, { shadowColor: accentColor }]}
           >
             {iconLib === 'mci' ? (
-              <MaterialCommunityIcons name={icon} size={30} color="#FFFFFF" />
+              <MaterialCommunityIcons name={icon} size={28} color="#FFFFFF" />
             ) : (
-              <Ionicons name={icon} size={28} color="#FFFFFF" />
+              <Ionicons name={icon} size={26} color="#FFFFFF" />
             )}
           </LinearGradient>
 
@@ -128,11 +129,11 @@ function ServiceCard({
             Open service
           </Text>
 
-          <View style={[styles.arrowButton, { borderColor: accentColor }]}>
-            <Ionicons name="arrow-forward" size={18} color={accentColor} />
+          <View style={[styles.arrowButton, { backgroundColor: tintColor }]}>
+            <Ionicons name="arrow-forward" size={17} color={accentColor} />
           </View>
         </View>
-      </LinearGradient>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -140,12 +141,12 @@ function ServiceCard({
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#0A0E13',
+    backgroundColor: '#FFFFFF',
   },
 
   container: {
     flex: 1,
-    backgroundColor: '#0A0E13',
+    backgroundColor: '#FFFFFF',
   },
 
   header: {
@@ -154,34 +155,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop:
       (Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0) + 14,
-    paddingBottom: 26,
+    paddingBottom: 24,
   },
 
   backButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 18,
-    backgroundColor: '#151C25',
-    borderWidth: 1,
-    borderColor: '#263241',
+    width: 44,
+    height: 44,
+    borderRadius: 16,
+    backgroundColor: '#F5F6F8',
     alignItems: 'center',
     justifyContent: 'center',
-    ...Platform.select({
-      android: {
-        elevation: 6,
-      },
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.3,
-        shadowRadius: 12,
-      },
-    }),
   },
 
   headerSpacer: {
-    width: 48,
-    height: 48,
+    width: 44,
+    height: 44,
   },
 
   headerTextWrap: {
@@ -190,17 +178,17 @@ const styles = StyleSheet.create({
   },
 
   headerTitle: {
-    color: '#FFFFFF',
-    fontSize: 23,
-    fontWeight: '900',
-    letterSpacing: 0.2,
+    color: '#12171E',
+    fontSize: 21,
+    fontWeight: '800',
+    letterSpacing: 0.1,
   },
 
   headerSubtitle: {
-    color: '#8D98A6',
+    color: '#9098A3',
     fontSize: 13,
-    marginTop: 4,
-    fontWeight: '600',
+    marginTop: 3,
+    fontWeight: '500',
   },
 
   content: {
@@ -208,35 +196,39 @@ const styles = StyleSheet.create({
     paddingTop: 4,
   },
 
-  card: {
-    position: 'relative',
-    overflow: 'hidden',
-    borderRadius: 28,
-    borderWidth: 1.2,
-    padding: 18,
-    marginBottom: 18,
-    backgroundColor: '#121922',
+  cardShadowWrap: {
+    borderRadius: 24,
+    marginBottom: 16,
+    backgroundColor: '#FFFFFF',
     ...Platform.select({
       android: {
-        elevation: 7,
+        elevation: 3,
       },
       ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.28,
-        shadowRadius: 16,
+        shadowColor: '#1A2B4C',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.08,
+        shadowRadius: 20,
       },
     }),
   },
 
+  card: {
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: 24,
+    padding: 18,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1.5,
+  },
+
   cardGlow: {
     position: 'absolute',
-    width: 145,
-    height: 145,
-    borderRadius: 73,
-    opacity: 0.16,
-    right: -45,
-    top: -45,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    right: -60,
+    top: -60,
   },
 
   topRow: {
@@ -245,56 +237,62 @@ const styles = StyleSheet.create({
   },
 
   iconBox: {
-    width: 64,
-    height: 64,
-    borderRadius: 22,
+    width: 58,
+    height: 58,
+    borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 16,
+    marginRight: 14,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.28,
+    shadowRadius: 10,
+    ...Platform.select({
+      android: {
+        elevation: 5,
+      },
+    }),
   },
 
   textWrap: {
     flex: 1,
-    paddingTop: 2,
+    paddingTop: 3,
   },
 
   cardTitle: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: '900',
-    lineHeight: 25,
+    color: '#12171E',
+    fontSize: 18,
+    fontWeight: '800',
+    lineHeight: 23,
   },
 
   cardDescription: {
-    color: '#9BA8B8',
-    fontSize: 14,
-    lineHeight: 21,
+    color: '#8A93A0',
+    fontSize: 13.5,
+    lineHeight: 20,
     fontWeight: '500',
-    marginTop: 8,
+    marginTop: 6,
   },
 
   bottomRow: {
     marginTop: 16,
-    paddingTop: 15,
+    paddingTop: 14,
     borderTopWidth: 1,
-    borderTopColor: '#FFFFFF12',
+    borderTopColor: '#F2F3F5',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
 
   openText: {
-    fontSize: 15,
-    fontWeight: '900',
-    letterSpacing: 0.2,
+    fontSize: 14.5,
+    fontWeight: '800',
+    letterSpacing: 0.1,
   },
 
   arrowButton: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    borderWidth: 1,
-    backgroundColor: '#FFFFFF08',
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     alignItems: 'center',
     justifyContent: 'center',
   },

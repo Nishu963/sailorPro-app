@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+const ACCENT_COLOR = '#6495ED';
+
 const TOPICS = [
   {
     key: 'indos',
@@ -183,7 +185,7 @@ export default function DGProblemSolverScreen({ navigation, onBack }) {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle="light-content" backgroundColor="#0A0E13" />
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 
       <View style={styles.header}>
         <TouchableOpacity
@@ -191,7 +193,7 @@ export default function DGProblemSolverScreen({ navigation, onBack }) {
           onPress={handleBack}
           activeOpacity={0.75}
         >
-          <Ionicons name="arrow-back" size={20} color="#FFFFFF" />
+          <Ionicons name="arrow-back" size={20} color="#12171E" />
         </TouchableOpacity>
 
         <View style={styles.headerTextWrap}>
@@ -207,12 +209,14 @@ export default function DGProblemSolverScreen({ navigation, onBack }) {
         showsVerticalScrollIndicator={false}
       >
         <View style={[styles.searchBar, isFocused && styles.searchBarFocused]}>
-          <Ionicons name="search" size={18} color="#8B95A1" style={styles.searchIcon} />
+          <View style={styles.searchIconCircle}>
+            <Ionicons name="search" size={16} color="#FFFFFF" />
+          </View>
 
           <TextInput
             style={styles.searchInput}
             placeholder="Search any DG problem"
-            placeholderTextColor="#64748B"
+            placeholderTextColor="#A6ACB6"
             value={query}
             onChangeText={setQuery}
             onFocus={() => setIsFocused(true)}
@@ -247,7 +251,7 @@ export default function DGProblemSolverScreen({ navigation, onBack }) {
                   >
                     <View style={[styles.questionDot, { backgroundColor: result.accent }]} />
                     <Text style={styles.questionText}>{result.question}</Text>
-                    <Ionicons name="chevron-forward" size={16} color="#5B6B7D" />
+                    <Ionicons name="chevron-forward" size={16} color="#B0B8C1" />
                   </TouchableOpacity>
                 ))}
               </View>
@@ -273,12 +277,6 @@ export default function DGProblemSolverScreen({ navigation, onBack }) {
 
                     <Text style={styles.topicTitle}>{topic.title}</Text>
 
-                    <View style={[styles.countBadge, { borderColor: topic.accent }]}>
-                      <Text style={[styles.countBadgeText, { color: topic.accent }]}>
-                        {topic.questions.length}
-                      </Text>
-                    </View>
-
                     <Ionicons
                       name={isExpanded ? 'chevron-up' : 'chevron-down'}
                       size={18}
@@ -301,7 +299,7 @@ export default function DGProblemSolverScreen({ navigation, onBack }) {
                         >
                           <View style={[styles.questionDot, { backgroundColor: topic.accent }]} />
                           <Text style={styles.questionText}>{question}</Text>
-                          <Ionicons name="chevron-forward" size={16} color="#5B6B7D" />
+                          <Ionicons name="chevron-forward" size={16} color="#B0B8C1" />
                         </TouchableOpacity>
                       ))}
                     </View>
@@ -319,7 +317,7 @@ export default function DGProblemSolverScreen({ navigation, onBack }) {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#0A0E13',
+    backgroundColor: '#FFFFFF',
   },
   header: {
     flexDirection: 'row',
@@ -332,7 +330,7 @@ const styles = StyleSheet.create({
     width: 46,
     height: 46,
     borderRadius: 23,
-    backgroundColor: '#171B21',
+    backgroundColor: '#F5F6F8',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -345,12 +343,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerTitle: {
-    color: '#FFFFFF',
+    color: '#12171E',
     fontSize: 19,
     fontWeight: '700',
   },
   headerSubtitle: {
-    color: '#7A8794',
+    color: '#8A93A0',
     fontSize: 13,
     fontWeight: '500',
     marginTop: 4,
@@ -363,28 +361,38 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#12171E',
+    backgroundColor: '#F5F6F8',
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.06)',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    borderColor: '#ECEEF1',
+    paddingHorizontal: 10,
+    paddingVertical: 8,
     marginBottom: 10,
   },
   searchBarFocused: {
-    borderColor: '#4C8DFF',
+    borderColor: ACCENT_COLOR,
+    backgroundColor: '#FFFFFF',
   },
-  searchIcon: {
+  searchIconCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: ACCENT_COLOR,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginRight: 10,
   },
   searchInput: {
     flex: 1,
-    color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '500',
+    color: '#12171E',
+    fontSize: 14.5,
+    fontWeight: '400',
+    paddingVertical: 0,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
   searchHint: {
-    color: '#6B7684',
+    color: '#9098A3',
     fontSize: 12.5,
     marginBottom: 20,
     fontWeight: '500',
@@ -395,21 +403,34 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   sectionLabelText: {
-    color: '#FFFFFF',
+    color: '#12171E',
     fontSize: 15,
     fontWeight: '800',
   },
   noResultsText: {
-    color: '#6B7684',
+    color: '#9098A3',
     fontSize: 14,
     fontWeight: '500',
     marginTop: 4,
   },
   topicCard: {
-    backgroundColor: '#12171E',
+    backgroundColor: '#FFFFFF',
     borderRadius: 16,
     marginBottom: 12,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#EEF0F3',
+    ...Platform.select({
+      android: {
+        elevation: 2,
+      },
+      ios: {
+        shadowColor: '#1A2B4C',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.05,
+        shadowRadius: 10,
+      },
+    }),
   },
   topicHeader: {
     flexDirection: 'row',
@@ -425,26 +446,13 @@ const styles = StyleSheet.create({
   },
   topicTitle: {
     flex: 1,
-    color: '#FFFFFF',
+    color: '#12171E',
     fontSize: 16,
     fontWeight: '700',
   },
-  countBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 1.5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  countBadgeText: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
   topicDivider: {
     height: 1,
-    backgroundColor: 'rgba(255,255,255,0.05)',
+    backgroundColor: '#F0F1F4',
     marginHorizontal: 16,
   },
   questionList: {
@@ -456,7 +464,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.04)',
+    borderBottomColor: '#F5F6F8',
   },
   questionRowLast: {
     borderBottomWidth: 0,
@@ -469,7 +477,7 @@ const styles = StyleSheet.create({
   },
   questionText: {
     flex: 1,
-    color: '#E7ECF2',
+    color: '#3A4450',
     fontSize: 14,
     fontWeight: '500',
     lineHeight: 19,
