@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "2b6db4ed-a379-472d-a0f6-6638bb35bea9"
+      }
+    },
+    "android": {
+      "package": "com.nishu123.mmdexamfullstack"
+    }
+  }
+}

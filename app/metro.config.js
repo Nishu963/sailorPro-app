@@ -8,11 +8,19 @@ const rootNodeModules = path.resolve(__dirname, '..', 'node_modules');
 
 config.watchFolders = [path.resolve(__dirname, '..')];
 config.resolver.nodeModulesPaths = [appNodeModules, rootNodeModules];
+function resolvePackageDir(moduleName) {
+  try {
+    return path.dirname(require.resolve(`${moduleName}/package.json`, { paths: [appNodeModules, rootNodeModules] }));
+  } catch (e) {
+    return null;
+  }
+}
+
 config.resolver.extraNodeModules = {
-  react: path.join(appNodeModules, 'react'),
-  'react-dom': path.join(appNodeModules, 'react-dom'),
-  'react-native': path.join(appNodeModules, 'react-native'),
-  'react-native-web': path.join(appNodeModules, 'react-native-web'),
+  react: resolvePackageDir('react') || path.join(appNodeModules, 'react'),
+  'react-dom': resolvePackageDir('react-dom') || path.join(appNodeModules, 'react-dom'),
+  'react-native': resolvePackageDir('react-native') || path.join(appNodeModules, 'react-native'),
+  'react-native-web': resolvePackageDir('react-native-web') || path.join(appNodeModules, 'react-native-web'),
 };
 
 function resolveFromAppNodeModules(moduleName) {
@@ -26,7 +34,7 @@ function resolveFromAppNodeModules(moduleName) {
   }
 
   return {
-    filePath: require.resolve(moduleName, { paths: [appNodeModules] }),
+    filePath: require.resolve(moduleName, { paths: [appNodeModules, rootNodeModules] }),
     type: 'sourceFile',
   };
 }

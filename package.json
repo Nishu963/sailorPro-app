@@ -23,6 +23,7 @@
     "react-native-web": "0.21.2"
   },
   "dependencies": {
+    "expo-dev-client": "~6.0.21",
     "metro": "0.82.0"
   }
 }
