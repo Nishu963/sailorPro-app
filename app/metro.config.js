@@ -6,8 +6,17 @@ const defaultResolveRequest = config.resolver.resolveRequest;
 const appNodeModules = path.resolve(__dirname, 'node_modules');
 const rootNodeModules = path.resolve(__dirname, '..', 'node_modules');
 
-config.watchFolders = [path.resolve(__dirname, '..')];
+config.watchFolders = Array.from(
+  new Set([...(config.watchFolders || []), path.resolve(__dirname, '..')]),
+);
 config.resolver.nodeModulesPaths = [appNodeModules, rootNodeModules];
+// Duplicate nested metro-runtime copies (bundled inside react-native / @expo/metro)
+// break relative requires like "./vendor/eventemitter3" — force resolution to the
+// single top-level metro-runtime instead of these nested duplicates.
+config.resolver.blockList = [
+  /node_modules[\\/]react-native[\\/]node_modules[\\/]metro-runtime[\\/].*/,
+  /node_modules[\\/]@expo[\\/]metro[\\/]node_modules[\\/]metro-runtime[\\/].*/,
+];
 function resolvePackageDir(moduleName) {
   try {
     return path.dirname(require.resolve(`${moduleName}/package.json`, { paths: [appNodeModules, rootNodeModules] }));

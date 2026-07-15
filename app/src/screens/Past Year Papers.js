@@ -24,287 +24,296 @@ const ICON_BG = '#EAF0FD'; // shared background for every icon box on this scree
 // ---------------------------------------------------------------------------
 // DATA — replace this with your API response. Shape kept identical so the
 // UI below needs zero changes when you swap in real data.
+//
+// NOTE: Semester III & V reuse the exact same subjects as Semester I, and
+// Semester IV & VI reuse the exact same subjects as Semester II — per your
+// instruction that odd semesters (I, III, V) and even semesters (II, IV, VI)
+// currently share identical content. Once real per-semester data is ready,
+// just give sem3/sem4/sem5/sem6 their own subjects arrays below.
 // ---------------------------------------------------------------------------
+const SEM1_SUBJECTS = [
+  {
+    id: 'applied-electricity',
+    name: 'Applied Electricity and Electronics',
+    years: [
+      { year: 2019, papers: ['December 2019'] },
+      { year: 2018, papers: ['June 2018'] },
+      { year: 2017, papers: ['December 2017', 'June 2017'] },
+    ],
+  },
+  {
+    id: 'applied-maths',
+    name: 'Applied Mathematics',
+    years: [
+      { year: 2024, papers: ['June 2024'] },
+      { year: 2023, papers: ['December 2023'] },
+      { year: 2022, papers: ['December 2022', 'June 2022'] },
+      { year: 2020, papers: ['October 2020', 'January 2020'] },
+      { year: 2019, papers: ['December 2019', 'November 2019'] },
+      { year: 2018, papers: ['December 2018', 'July 2018', 'June 2018', 'May 2018'] },
+      { year: 2017, papers: ['December 2017', 'July 2017', 'June 2017'] },
+    ],
+  },
+  {
+    id: 'applied-sciences',
+    name: 'Applied Sciences',
+    years: [
+      { year: 2024, papers: ['June 2024', 'June 2024'] },
+      { year: 2023, papers: ['December 2023', 'June 2023'] },
+      { year: 2022, papers: ['December 2022', 'June 2022'] },
+      { year: 2020, papers: ['October 2020', 'January 2020'] },
+      { year: 2019, papers: ['December 2019', 'November 2019'] },
+      { year: 2018, papers: ['December 2018', 'July 2018', 'June 2018', 'May 2018'] },
+    ],
+  },
+  {
+    id: 'bridge-equipment',
+    name: 'Bridge Equipment and COLREGS',
+    years: [
+      { year: 2025, papers: ['December 2025', 'June 2025'] },
+      { year: 2024, papers: ['December 2024'] },
+    ],
+  },
+  {
+    id: 'cargo-handling',
+    name: 'Cargo Handling Stowage and Seamanship I',
+    years: [
+      { year: 2025, papers: ['June 2025'] },
+      { year: 2024, papers: ['June 2024'] },
+      { year: 2023, papers: ['December 2023'] },
+      { year: 2022, papers: ['December 2022'] },
+      { year: 2020, papers: ['January 2020'] },
+      { year: 2019, papers: ['December 2019', 'November 2019'] },
+      { year: 2018, papers: ['November 2018', 'July 2018', 'June 2018', 'May 2018'] },
+      { year: 2017, papers: ['December 2017', 'November 2017', 'June 2017', 'May 2017'] },
+    ],
+  },
+  {
+    id: 'cargo-work',
+    name: 'Cargo Work',
+    years: [
+      { year: 2025, papers: ['December 2025', 'June 2025'] },
+      { year: 2024, papers: ['December 2024'] },
+    ],
+  },
+  {
+    id: 'english-hf-history',
+    name: 'English Human Factors and Maritime History',
+    years: [
+      { year: 2023, papers: ['December 2023'] },
+      { year: 2022, papers: ['December 2022'] },
+      { year: 2020, papers: ['September 2020'] },
+      { year: 2019, papers: ['December 2019', 'November 2019'] },
+      { year: 2018, papers: ['December 2018', 'June 2018', 'May 2018'] },
+      { year: 2017, papers: ['December 2017', 'June 2017'] },
+    ],
+  },
+  {
+    id: 'english-hf-history-2',
+    name: 'English Human Factors And Martime History',
+    years: [{ year: 2024, papers: ['June 2024', 'June 2024'] }],
+  },
+  {
+    id: 'marine-met',
+    name: 'Marine Meteorology',
+    years: [{ year: 2025, papers: ['June 2025'] }],
+  },
+  {
+    id: 'maritime-english',
+    name: 'Maritime English',
+    years: [
+      { year: 2025, papers: ['December 2025'] },
+      { year: 2024, papers: ['December 2024', 'June 2024'] },
+    ],
+  },
+  {
+    id: 'mathematics',
+    name: 'Mathematics',
+    years: [
+      { year: 2025, papers: ['December 2025'] },
+      { year: 2024, papers: ['December 2024', 'June 2024'] },
+    ],
+  },
+  {
+    id: 'nav1',
+    name: 'Navigation I Terrestrial and Celestial Navigation',
+    years: [
+      { year: 2025, papers: ['December 2025', 'June 2025'] },
+      { year: 2024, papers: ['December 2024', 'June 2024'] },
+      { year: 2023, papers: ['December 2023', 'June 2023'] },
+      { year: 2022, papers: ['December 2022'] },
+      { year: 2020, papers: ['September 2020', 'January 2020'] },
+      { year: 2019, papers: ['December 2019', 'November 2019'] },
+      { year: 2018, papers: ['December 2018', 'July 2018', 'June 2018', 'May 2018'] },
+      { year: 2017, papers: ['December 2017', 'July 2017', 'June 2017', 'May 2017'] },
+    ],
+  },
+  {
+    id: 'nav2',
+    name: 'Navigation II',
+    years: [
+      { year: 2024, papers: ['June 2024'] },
+      { year: 2022, papers: ['December 2023'] },
+      { year: 2017, papers: ['December 2017'] },
+    ],
+  },
+  {
+    id: 'physics',
+    name: 'Physics',
+    years: [
+      { year: 2025, papers: ['December 2025', 'June 2025'] },
+      { year: 2024, papers: ['December 2024'] },
+    ],
+  },
+  {
+    id: 'ship-construction-2',
+    name: 'Ship Construction & Ship Stability – II',
+    years: [
+      { year: 2025, papers: ['December 2025', 'June 2025'] },
+      { year: 2024, papers: ['December 2024', 'June 2024'] },
+      { year: 2023, papers: ['December 2023'] },
+      { year: 2017, papers: ['December 2017'] },
+    ],
+  },
+];
+
+const SEM2_SUBJECTS = [
+  {
+    id: 'bridge-electronics',
+    name: 'Bridge Electronics Equipment and Watch Keeping',
+    years: [
+      { year: 2025, papers: ['December 2025', 'June 2025'] },
+      { year: 2024, papers: ['December 2024'] },
+      { year: 2022, papers: ['June 2022'] },
+      { year: 2019, papers: ['December 2019', 'July 2019'] },
+    ],
+  },
+  {
+    id: 'cargo-handling-2',
+    name: 'Cargo Handling Stowage and Seamanship II',
+    years: [
+      { year: 2024, papers: ['December 2024', 'June 2024'] },
+      { year: 2023, papers: ['December 2023', 'June 2023'] },
+      { year: 2022, papers: ['December 2022', 'June 2022'] },
+      { year: 2020, papers: ['December 2020'] },
+      { year: 2019, papers: ['December 2019', 'November 2019', 'June 2019'] },
+      { year: 2018, papers: ['December 2018', 'June 2018', 'May 2018'] },
+      { year: 2017, papers: ['July 2017', 'June 2017', 'May 2017'] },
+    ],
+  },
+  {
+    id: 'cargo-work-2',
+    name: 'Cargo Work II',
+    years: [{ year: 2025, papers: ['December 2025', 'June 2025'] }],
+  },
+  {
+    id: 'celestial-navigation',
+    name: 'Celestial Navigation',
+    years: [
+      { year: 2025, papers: ['December 2025', 'June 2025'] },
+      { year: 2022, papers: ['June 2022'] },
+      { year: 2019, papers: ['December 2019', 'June 2019'] },
+    ],
+  },
+  {
+    id: 'contingency-preparedness',
+    name: 'Contingency Preparedness',
+    years: [{ year: 2025, papers: ['December 2025', 'June 2025'] }],
+  },
+  {
+    id: 'emergencies-maritime-comm',
+    name: 'Emergencies Maritime Communication and Commercial Shipping',
+    years: [
+      { year: 2024, papers: ['December 2024', 'June 2024'] },
+      { year: 2023, papers: ['December 2023', 'June 2023'] },
+      { year: 2022, papers: ['December 2022', 'June 2022'] },
+      { year: 2019, papers: ['December 2019', 'November 2019', 'June 2019'] },
+      { year: 2018, papers: ['December 2018'] },
+      { year: 2017, papers: ['December 2017', 'June 2017'] },
+    ],
+  },
+  {
+    id: 'marine-met-2',
+    name: 'Marine Meteorology',
+    years: [{ year: 2025, papers: ['December 2025', 'June 2025'] }],
+  },
+  {
+    id: 'marine-pollution',
+    name: 'Marine Pollution Prevention',
+    years: [{ year: 2025, papers: ['December 2025', 'June 2025'] }],
+  },
+  {
+    id: 'maritime-history-commerce',
+    name: 'Maritime History and Commerce',
+    years: [
+      { year: 2019, papers: ['December 2019'] },
+      { year: 2018, papers: ['June 2018'] },
+      { year: 2017, papers: ['June 2017'] },
+    ],
+  },
+  {
+    id: 'marpol-marine-engineering',
+    name: 'MARPOL and Marine Engineering Knowledge',
+    years: [
+      { year: 2024, papers: ['December 2024', 'June 2024'] },
+      { year: 2023, papers: ['December 2023', 'June 2023'] },
+      { year: 2022, papers: ['December 2022', 'July 2022', 'June 2022'] },
+      { year: 2019, papers: ['December 2019', 'June 2019'] },
+      { year: 2018, papers: ['December 2018', 'June 2018'] },
+      { year: 2017, papers: ['June 2017'] },
+    ],
+  },
+  {
+    id: 'navigation-3',
+    name: 'Navigation III - Navigation and Chartwork',
+    years: [
+      { year: 2024, papers: ['December 2024', 'June 2024'] },
+      { year: 2023, papers: ['December 2023', 'June 2023'] },
+      { year: 2022, papers: ['December 2022', 'June 2022'] },
+      { year: 2018, papers: ['June 2018'] },
+    ],
+  },
+  {
+    id: 'navigation-4',
+    name: 'Navigation IV - Advanced Bridge Equip, Watch-Keeping and Meteorology',
+    years: [
+      { year: 2024, papers: ['June 2024'] },
+      { year: 2023, papers: ['December 2023'] },
+      { year: 2022, papers: ['December 2022', 'July 2022'] },
+      { year: 2018, papers: ['December 2018', 'July 2018'] },
+    ],
+  },
+  {
+    id: 'ship-construction-stability-2',
+    name: 'Ship Construction and Ship Stability - II',
+    years: [
+      { year: 2025, papers: ['December 2025', 'June 2025'] },
+      { year: 2024, papers: ['December 2024', 'June 2024'] },
+      { year: 2023, papers: ['December 2023'] },
+      { year: 2022, papers: ['December 2022', 'June 2022'] },
+      { year: 2019, papers: ['December 2019', 'June 2019'] },
+      { year: 2018, papers: ['June 2018'] },
+      { year: 2017, papers: ['December 2017'] },
+    ],
+  },
+];
+
 const SEMESTERS = [
-  {
-    id: 'sem1',
-    label: 'Semester I',
-    subjects: [
-      {
-        id: 'applied-electricity',
-        name: 'Applied Electricity and Electronics',
-        years: [
-          { year: 2019, papers: ['December 2019'] },
-          { year: 2018, papers: ['June 2018'] },
-          { year: 2017, papers: ['December 2017', 'June 2017'] },
-        ],
-      },
-      {
-        id: 'applied-maths',
-        name: 'Applied Mathematics',
-        years: [
-          { year: 2024, papers: ['June 2024'] },
-          { year: 2023, papers: ['December 2023'] },
-          { year: 2022, papers: ['December 2022', 'June 2022'] },
-          { year: 2020, papers: ['October 2020', 'January 2020'] },
-          { year: 2019, papers: ['December 2019', 'November 2019'] },
-          { year: 2018, papers: ['December 2018', 'July 2018', 'June 2018', 'May 2018'] },
-          { year: 2017, papers: ['December 2017', 'July 2017', 'June 2017'] },
-        ],
-      },
-      {
-        id: 'applied-sciences',
-        name: 'Applied Sciences',
-        years: [
-          { year: 2024, papers: ['June 2024', 'June 2024'] },
-          { year: 2023, papers: ['December 2023', 'June 2023'] },
-          { year: 2022, papers: ['December 2022', 'June 2022'] },
-          { year: 2020, papers: ['October 2020', 'January 2020'] },
-          { year: 2019, papers: ['December 2019', 'November 2019'] },
-          { year: 2018, papers: ['December 2018', 'July 2018', 'June 2018', 'May 2018'] },
-        ],
-      },
-      {
-        id: 'bridge-equipment',
-        name: 'Bridge Equipment and COLREGS',
-        years: [
-          { year: 2025, papers: ['December 2025', 'June 2025'] },
-          { year: 2024, papers: ['December 2024'] },
-        ],
-      },
-      {
-        id: 'cargo-handling',
-        name: 'Cargo Handling Stowage and Seamanship I',
-        years: [
-          { year: 2025, papers: ['June 2025'] },
-          { year: 2024, papers: ['June 2024'] },
-          { year: 2023, papers: ['December 2023'] },
-          { year: 2022, papers: ['December 2022'] },
-          { year: 2020, papers: ['January 2020'] },
-          { year: 2019, papers: ['December 2019', 'November 2019'] },
-          { year: 2018, papers: ['November 2018', 'July 2018', 'June 2018', 'May 2018'] },
-          { year: 2017, papers: ['December 2017', 'November 2017', 'June 2017', 'May 2017'] },
-        ],
-      },
-      {
-        id: 'cargo-work',
-        name: 'Cargo Work',
-        years: [
-          { year: 2025, papers: ['December 2025', 'June 2025'] },
-          { year: 2024, papers: ['December 2024'] },
-        ],
-      },
-      {
-        id: 'english-hf-history',
-        name: 'English Human Factors and Maritime History',
-        years: [
-          { year: 2023, papers: ['December 2023'] },
-          { year: 2022, papers: ['December 2022'] },
-          { year: 2020, papers: ['September 2020'] },
-          { year: 2019, papers: ['December 2019', 'November 2019'] },
-          { year: 2018, papers: ['December 2018', 'June 2018', 'May 2018'] },
-          { year: 2017, papers: ['December 2017', 'June 2017'] },
-        ],
-      },
-      {
-        id: 'english-hf-history-2',
-        name: 'English Human Factors And Martime History',
-        years: [{ year: 2024, papers: ['June 2024', 'June 2024'] }],
-      },
-      {
-        id: 'marine-met',
-        name: 'Marine Meteorology',
-        years: [{ year: 2025, papers: ['June 2025'] }],
-      },
-      {
-        id: 'maritime-english',
-        name: 'Maritime English',
-        years: [
-          { year: 2025, papers: ['December 2025'] },
-          { year: 2024, papers: ['December 2024', 'June 2024'] },
-        ],
-      },
-      {
-        id: 'mathematics',
-        name: 'Mathematics',
-        years: [
-          { year: 2025, papers: ['December 2025'] },
-          { year: 2024, papers: ['December 2024', 'June 2024'] },
-        ],
-      },
-      {
-        id: 'nav1',
-        name: 'Navigation I Terrestrial and Celestial Navigation',
-        years: [
-          { year: 2025, papers: ['December 2025', 'June 2025'] },
-          { year: 2024, papers: ['December 2024', 'June 2024'] },
-          { year: 2023, papers: ['December 2023', 'June 2023'] },
-          { year: 2022, papers: ['December 2022'] },
-          { year: 2020, papers: ['September 2020', 'January 2020'] },
-          { year: 2019, papers: ['December 2019', 'November 2019'] },
-          { year: 2018, papers: ['December 2018', 'July 2018', 'June 2018', 'May 2018'] },
-          { year: 2017, papers: ['December 2017', 'July 2017', 'June 2017', 'May 2017'] },
-        ],
-      },
-      {
-        id: 'nav2',
-        name: 'Navigation II',
-        years: [
-          { year: 2024, papers: ['June 2024'] },
-          { year: 2022, papers: ['December 2023'] },
-          { year: 2017, papers: ['December 2017'] },
-        ],
-      },
-      {
-        id: 'physics',
-        name: 'Physics',
-        years: [
-          { year: 2025, papers: ['December 2025', 'June 2025'] },
-          { year: 2024, papers: ['December 2024'] },
-        ],
-      },
-      {
-        id: 'ship-construction-2',
-        name: 'Ship Construction & Ship Stability – II',
-        years: [
-          { year: 2025, papers: ['December 2025', 'June 2025'] },
-          { year: 2024, papers: ['December 2024', 'June 2024'] },
-          { year: 2023, papers: ['December 2023'] },
-          { year: 2017, papers: ['December 2017'] },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'sem2',
-    label: 'Semester II',
-    subjects: [
-      {
-        id: 'bridge-electronics',
-        name: 'Bridge Electronics Equipment and Watch Keeping',
-        years: [
-          { year: 2025, papers: ['December 2025', 'June 2025'] },
-          { year: 2024, papers: ['December 2024'] },
-          { year: 2022, papers: ['June 2022'] },
-          { year: 2019, papers: ['December 2019', 'July 2019'] },
-        ],
-      },
-      {
-        id: 'cargo-handling-2',
-        name: 'Cargo Handling Stowage and Seamanship II',
-        years: [
-          { year: 2024, papers: ['December 2024', 'June 2024'] },
-          { year: 2023, papers: ['December 2023', 'June 2023'] },
-          { year: 2022, papers: ['December 2022', 'June 2022'] },
-          { year: 2020, papers: ['December 2020'] },
-          { year: 2019, papers: ['December 2019', 'November 2019', 'June 2019'] },
-          { year: 2018, papers: ['December 2018', 'June 2018', 'May 2018'] },
-          { year: 2017, papers: ['July 2017', 'June 2017', 'May 2017'] },
-        ],
-      },
-      {
-        id: 'cargo-work-2',
-        name: 'Cargo Work II',
-        years: [{ year: 2025, papers: ['December 2025', 'June 2025'] }],
-      },
-      {
-        id: 'celestial-navigation',
-        name: 'Celestial Navigation',
-        years: [
-          { year: 2025, papers: ['December 2025', 'June 2025'] },
-          { year: 2022, papers: ['June 2022'] },
-          { year: 2019, papers: ['December 2019', 'June 2019'] },
-        ],
-      },
-      {
-        id: 'contingency-preparedness',
-        name: 'Contingency Preparedness',
-        years: [{ year: 2025, papers: ['December 2025', 'June 2025'] }],
-      },
-      {
-        id: 'emergencies-maritime-comm',
-        name: 'Emergencies Maritime Communication and Commercial Shipping',
-        years: [
-          { year: 2024, papers: ['December 2024', 'June 2024'] },
-          { year: 2023, papers: ['December 2023', 'June 2023'] },
-          { year: 2022, papers: ['December 2022', 'June 2022'] },
-          { year: 2019, papers: ['December 2019', 'November 2019', 'June 2019'] },
-          { year: 2018, papers: ['December 2018'] },
-          { year: 2017, papers: ['December 2017', 'June 2017'] },
-        ],
-      },
-      {
-        id: 'marine-met-2',
-        name: 'Marine Meteorology',
-        years: [{ year: 2025, papers: ['December 2025', 'June 2025'] }],
-      },
-      {
-        id: 'marine-pollution',
-        name: 'Marine Pollution Prevention',
-        years: [{ year: 2025, papers: ['December 2025', 'June 2025'] }],
-      },
-      {
-        id: 'maritime-history-commerce',
-        name: 'Maritime History and Commerce',
-        years: [
-          { year: 2019, papers: ['December 2019'] },
-          { year: 2018, papers: ['June 2018'] },
-          { year: 2017, papers: ['June 2017'] },
-        ],
-      },
-      {
-        id: 'marpol-marine-engineering',
-        name: 'MARPOL and Marine Engineering Knowledge',
-        years: [
-          { year: 2024, papers: ['December 2024', 'June 2024'] },
-          { year: 2023, papers: ['December 2023', 'June 2023'] },
-          { year: 2022, papers: ['December 2022', 'July 2022', 'June 2022'] },
-          { year: 2019, papers: ['December 2019', 'June 2019'] },
-          { year: 2018, papers: ['December 2018', 'June 2018'] },
-          { year: 2017, papers: ['June 2017'] },
-        ],
-      },
-      {
-        id: 'navigation-3',
-        name: 'Navigation III - Navigation and Chartwork',
-        years: [
-          { year: 2024, papers: ['December 2024', 'June 2024'] },
-          { year: 2023, papers: ['December 2023', 'June 2023'] },
-          { year: 2022, papers: ['December 2022', 'June 2022'] },
-          { year: 2018, papers: ['June 2018'] },
-        ],
-      },
-      {
-        id: 'navigation-4',
-        name: 'Navigation IV - Advanced Bridge Equip, Watch-Keeping and Meteorology',
-        years: [
-          { year: 2024, papers: ['June 2024'] },
-          { year: 2023, papers: ['December 2023'] },
-          { year: 2022, papers: ['December 2022', 'July 2022'] },
-          { year: 2018, papers: ['December 2018', 'July 2018'] },
-        ],
-      },
-      {
-        id: 'ship-construction-stability-2',
-        name: 'Ship Construction and Ship Stability - II',
-        years: [
-          { year: 2025, papers: ['December 2025', 'June 2025'] },
-          { year: 2024, papers: ['December 2024', 'June 2024'] },
-          { year: 2023, papers: ['December 2023'] },
-          { year: 2022, papers: ['December 2022', 'June 2022'] },
-          { year: 2019, papers: ['December 2019', 'June 2019'] },
-          { year: 2018, papers: ['June 2018'] },
-          { year: 2017, papers: ['December 2017'] },
-        ],
-      },
-    ],
-  },
+  { id: 'sem1', label: 'Semester I', subjects: SEM1_SUBJECTS },
+  { id: 'sem2', label: 'Semester II', subjects: SEM2_SUBJECTS },
+  { id: 'sem3', label: 'Semester III', subjects: SEM1_SUBJECTS },
+  { id: 'sem4', label: 'Semester IV', subjects: SEM2_SUBJECTS },
+  { id: 'sem5', label: 'Semester V', subjects: SEM1_SUBJECTS },
+  { id: 'sem6', label: 'Semester VI', subjects: SEM2_SUBJECTS },
 ];
 
 const totalPapers = (subject) =>
   subject.years.reduce((sum, y) => sum + y.papers.length, 0);
 
 const totalYears = (subject) => subject.years.length;
+
+const semesterPapersCount = (sem) =>
+  sem.subjects.reduce((sum, s) => sum + totalPapers(s), 0);
 
 // 👇 Change ONLY this line to swap the icon used on every subject card.
 const SUBJECT_ICON = 'reader-outline';
@@ -317,28 +326,21 @@ export default function PastYearPapersScreen({ route }) {
   // Optional course code shown under the header title (e.g. "DNS").
   // Pass it via navigation params: navigation.navigate('PastYearPapers', { courseCode: 'DNS' })
   const courseCode = route?.params?.courseCode;
-  const [activeSemId, setActiveSemId] = useState(SEMESTERS[0].id);
-  const [expandedId, setExpandedId] = useState(null);
 
-  const activeSem = useMemo(
-    () => SEMESTERS.find((s) => s.id === activeSemId),
-    [activeSemId]
-  );
+  // Which semester's subjects are currently expanded inline (starts with
+  // Semester I open, matching the previous "default active" behaviour).
+  const [expandedSemId, setExpandedSemId] = useState(SEMESTERS[0].id);
+  // Which subject (within the currently expanded semester) is showing its
+  // year-wise papers.
+  const [expandedSubjectId, setExpandedSubjectId] = useState(null);
 
-  const subjectsCount = activeSem.subjects.length;
-  const papersCount = activeSem.subjects.reduce(
-    (sum, s) => sum + totalPapers(s),
-    0
-  );
-
-  const toggleSubject = (id) => {
-    setExpandedId((prev) => (prev === id ? null : id));
+  const toggleSemester = (id) => {
+    setExpandedSemId((prev) => (prev === id ? null : id));
+    setExpandedSubjectId(null);
   };
 
-  const selectSemester = (id) => {
-    if (id === activeSemId) return;
-    setActiveSemId(id);
-    setExpandedId(null);
+  const toggleSubject = (id) => {
+    setExpandedSubjectId((prev) => (prev === id ? null : id));
   };
 
   return (
@@ -369,7 +371,9 @@ export default function PastYearPapersScreen({ route }) {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Semester card */}
+        {/* Single merged card: Semester rows double as accordion headers.
+            Tapping a semester expands its subjects list right below it,
+            inside the SAME card — no separate Subjects card anymore. */}
         <View style={styles.card}>
           <View style={styles.cardHeaderRow}>
             <View style={styles.iconBoxLight}>
@@ -383,148 +387,128 @@ export default function PastYearPapersScreen({ route }) {
             </View>
           </View>
 
-          <View style={styles.semRow}>
+          <View style={styles.semList}>
             {SEMESTERS.map((sem) => {
-              const selected = sem.id === activeSemId;
+              const isOpen = sem.id === expandedSemId;
               return (
-                <TouchableOpacity
+                <View
                   key={sem.id}
-                  style={[styles.semTile, selected && styles.semTileActive]}
-                  activeOpacity={0.7}
-                  onPress={() => selectSemester(sem.id)}
+                  style={[styles.semBlock, isOpen && styles.semBlockOpen]}
                 >
-                  <View style={styles.semTileTopRow}>
-                    <View style={styles.iconBoxTiny}>
-                      <Ionicons
-                        name="briefcase"
-                        size={14}
-                        color={selected ? ACCENT : DARK_NAVY}
-                      />
-                    </View>
+                  <TouchableOpacity
+                    style={styles.semRow}
+                    activeOpacity={0.7}
+                    onPress={() => toggleSemester(sem.id)}
+                  >
                     <Text
-                      style={[
-                        styles.semTileTitle,
-                        selected && { color: ACCENT },
-                      ]}
+                      style={[styles.semRowTitle, isOpen && { color: ACCENT }]}
                       numberOfLines={1}
-                      adjustsFontSizeToFit
-                      minimumFontScale={0.85}
                     >
                       {sem.label}
                     </Text>
-                  </View>
 
-                  {selected ? (
-                    <View style={styles.semTileBadgeActive}>
-                      <Ionicons name="checkmark-circle" size={12} color="#FFFFFF" />
-                      <Text style={styles.semTileBadgeActiveText}>Active</Text>
+                    <View style={styles.semRowRight}>
+                      <Ionicons
+                        name={isOpen ? 'chevron-up' : 'chevron-down'}
+                        size={18}
+                        color={isOpen ? ACCENT : TEXT_MUTED}
+                      />
                     </View>
-                  ) : (
-                    <View style={styles.semTileBadge}>
-                      <Text style={styles.semTileBadgeText}>Tap to open</Text>
+                  </TouchableOpacity>
+
+                  {isOpen && (
+                    <View style={styles.semSubjectsWrap}>
+                      <Text style={styles.subjectsMetaText}>
+                        {sem.subjects.length} subjects and {semesterPapersCount(sem)} papers
+                      </Text>
+                      <Text style={styles.tapHint}>Tap a subject to view year-wise papers</Text>
+
+                      {sem.subjects.map((subject) => {
+                        const subjectOpen = expandedSubjectId === subject.id;
+                        const sortedYears = [...subject.years].sort(
+                          (a, b) => b.year - a.year
+                        );
+                        return (
+                          <View
+                            key={subject.id}
+                            style={[
+                              styles.subjectCard,
+                              subjectOpen && styles.subjectCardOpen,
+                            ]}
+                          >
+                            <TouchableOpacity
+                              style={styles.subjectRow}
+                              activeOpacity={0.7}
+                              onPress={() => toggleSubject(subject.id)}
+                            >
+                              <View
+                                style={[
+                                  styles.iconBoxSmall,
+                                  subjectOpen && { backgroundColor: ACCENT },
+                                ]}
+                              >
+                                <Ionicons
+                                  name={SUBJECT_ICON}
+                                  size={16}
+                                  color={subjectOpen ? '#FFFFFF' : DARK_NAVY}
+                                />
+                              </View>
+                              <View style={{ flex: 1, marginLeft: 12 }}>
+                                <Text
+                                  style={[
+                                    styles.subjectName,
+                                    subjectOpen && { color: ACCENT },
+                                  ]}
+                                  numberOfLines={2}
+                                >
+                                  {subject.name}
+                                </Text>
+                                <Text style={styles.subjectMeta}>
+                                  {totalPapers(subject)} papers - {totalYears(subject)} years
+                                </Text>
+                              </View>
+                              <View
+                                style={[
+                                  styles.chevronCircle,
+                                  subjectOpen && { backgroundColor: ACCENT },
+                                ]}
+                              >
+                                <Ionicons
+                                  name={subjectOpen ? 'chevron-up' : 'chevron-down'}
+                                  size={14}
+                                  color={subjectOpen ? '#FFFFFF' : TEXT_MUTED}
+                                />
+                              </View>
+                            </TouchableOpacity>
+
+                            {subjectOpen && (
+                              <View style={styles.yearsWrap}>
+                                {sortedYears.map((y) => (
+                                  <View key={y.year} style={{ marginBottom: 14 }}>
+                                    <View style={styles.yearHeaderRow}>
+                                      <Text style={styles.yearLabel}>{y.year}</Text>
+                                      <View style={styles.yearDivider} />
+                                    </View>
+                                    <View style={styles.chipsRow}>
+                                      {y.papers.map((p, idx) => (
+                                        <View key={`${y.year}-${idx}`} style={styles.chip}>
+                                          <Text style={styles.chipText}>{p}</Text>
+                                        </View>
+                                      ))}
+                                    </View>
+                                  </View>
+                                ))}
+                              </View>
+                            )}
+                          </View>
+                        );
+                      })}
                     </View>
                   )}
-                </TouchableOpacity>
+                </View>
               );
             })}
           </View>
-        </View>
-
-        {/* Subjects card */}
-        <View style={styles.card}>
-          <View style={styles.cardHeaderRow}>
-            <View style={styles.iconBoxLight}>
-              <Ionicons name="book-outline" size={20} color={ACCENT} />
-            </View>
-            <View style={{ marginLeft: 12 }}>
-              <Text style={styles.cardTitle}>Subjects</Text>
-              <Text style={styles.cardSubtitle}>
-                {subjectsCount} subjects and {papersCount} papers
-              </Text>
-            </View>
-          </View>
-          <Text style={styles.tapHint}>Tap a subject to view year-wise papers</Text>
-
-          {activeSem.subjects.map((subject) => {
-            const isOpen = expandedId === subject.id;
-            const sortedYears = [...subject.years].sort(
-              (a, b) => b.year - a.year
-            );
-            return (
-              <View
-                key={subject.id}
-                style={[
-                  styles.subjectCard,
-                  isOpen && styles.subjectCardOpen,
-                ]}
-              >
-                <TouchableOpacity
-                  style={styles.subjectRow}
-                  activeOpacity={0.7}
-                  onPress={() => toggleSubject(subject.id)}
-                >
-                  <View
-                    style={[
-                      styles.iconBoxSmall,
-                      isOpen && { backgroundColor: ACCENT },
-                    ]}
-                  >
-                    <Ionicons
-                      name={SUBJECT_ICON}
-                      size={16}
-                      color={isOpen ? '#FFFFFF' : DARK_NAVY}
-                    />
-                  </View>
-                  <View style={{ flex: 1, marginLeft: 12 }}>
-                    <Text
-                      style={[
-                        styles.subjectName,
-                        isOpen && { color: ACCENT },
-                      ]}
-                      numberOfLines={2}
-                    >
-                      {subject.name}
-                    </Text>
-                    <Text style={styles.subjectMeta}>
-                      {totalPapers(subject)} papers - {totalYears(subject)} years
-                    </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.chevronCircle,
-                      isOpen && { backgroundColor: ACCENT },
-                    ]}
-                  >
-                    <Ionicons
-                      name={isOpen ? 'chevron-up' : 'chevron-down'}
-                      size={14}
-                      color={isOpen ? '#FFFFFF' : TEXT_MUTED}
-                    />
-                  </View>
-                </TouchableOpacity>
-
-                {isOpen && (
-                  <View style={styles.yearsWrap}>
-                    {sortedYears.map((y) => (
-                      <View key={y.year} style={{ marginBottom: 14 }}>
-                        <View style={styles.yearHeaderRow}>
-                          <Text style={styles.yearLabel}>{y.year}</Text>
-                          <View style={styles.yearDivider} />
-                        </View>
-                        <View style={styles.chipsRow}>
-                          {y.papers.map((p, idx) => (
-                            <View key={`${y.year}-${idx}`} style={styles.chip}>
-                              <Text style={styles.chipText}>{p}</Text>
-                            </View>
-                          ))}
-                        </View>
-                      </View>
-                    ))}
-                  </View>
-                )}
-              </View>
-            );
-          })}
         </View>
       </ScrollView>
 
@@ -610,83 +594,65 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: 16, fontWeight: '700', color: TEXT_DARK, letterSpacing: 0.1 },
   cardSubtitle: { fontSize: 12, color: TEXT_MUTED, marginTop: 2 },
 
-  semRow: {
-    flexDirection: 'row',
+  // Semester list — each block is a header row + (when open) its subjects,
+  // all still inside the one outer `card` above.
+  semList: {
     marginTop: 14,
-    gap: 10,
+    gap: 12,
   },
-  semTile: {
-    flex: 1,
-    minWidth: 0,
-    backgroundColor: '#F7F8FB',
-    borderRadius: 16,
+  semBlock: {
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#EDEFF4',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
+    borderColor: BORDER,
+    backgroundColor: '#FFFFFF',
+    overflow: 'hidden',
     shadowColor: '#1B2A4A',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 10,
+    shadowOpacity: 0.04,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
     elevation: 1,
   },
-  semTileActive: {
-    backgroundColor: '#EEF3FE',
-    borderColor: ACCENT,
-    borderWidth: 1.5,
-    shadowColor: ACCENT,
-    shadowOpacity: 0.18,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 10,
-    elevation: 2,
+  semBlockOpen: {
+    borderColor: '#D7E1F5',
+    paddingBottom: 14,
   },
-  semTileTopRow: {
+  semRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
+    paddingVertical: 14,
+    paddingHorizontal: 16,
   },
-  semTileTitle: {
-    flex: 1,
-    fontSize: 13.5,
+  semRowTitle: {
+    fontSize: 15,
     fontWeight: '700',
     color: TEXT_DARK,
     letterSpacing: 0.1,
   },
-  semTileBadge: {
-    marginTop:1,
-    marginLeft: 30,
-    alignSelf: 'flex-start',
-    maxWidth: '100%',
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#E9ECF3',
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-  },
-  semTileBadgeText: { fontSize: 10, fontWeight: '700', color: TEXT_MUTED },
-  semTileBadgeActive: {
-    marginTop:1,
-    marginLeft: 30,
+  semRowRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-start',
-    maxWidth: '100%',
-    backgroundColor:'#2563EB',
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    gap: 4,
+    gap: 10,
   },
-  semTileBadgeActiveText: { fontSize: 10, fontWeight: '700', color: '#FFFFFF' },
 
-  tapHint: { fontSize: 12, color: TEXT_MUTED, marginTop: 12, marginBottom: 14 },
+  // Subjects, nested inside the expanded semester block.
+  semSubjectsWrap: {
+    paddingHorizontal: 14,
+    borderTopWidth: 1,
+    borderTopColor: '#EEF0F5',
+    paddingTop: 12,
+  },
+  subjectsMetaText: {
+    fontSize: 12.5,
+    fontWeight: '700',
+    color: TEXT_DARK,
+  },
+
+  tapHint: { fontSize: 12, color: TEXT_MUTED, marginTop: 4, marginBottom: 12 },
 
   subjectCard: {
     borderWidth: 1,
     borderColor: '#EFF1F6',
-    borderLeftWidth: 3,
-    borderLeftColor: '#C9D9F7',
     borderRadius: 16,
     padding: 14,
     marginBottom: 10,
@@ -695,8 +661,6 @@ const styles = StyleSheet.create({
   subjectCardOpen: {
     backgroundColor: '#FFFFFF',
     borderColor: '#D7E1F5',
-    borderLeftWidth: 3,
-    borderLeftColor: ACCENT,
     shadowColor: '#1B2A4A',
     shadowOpacity: 0.08,
     shadowOffset: { width: 0, height: 4 },
@@ -707,15 +671,7 @@ const styles = StyleSheet.create({
   iconBoxSmall: {
     width: 34,
     height: 34,
-    borderRadius: 9,
-    backgroundColor: ICON_BG,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconBoxTiny: {
-    width: 26,
-    height: 26,
-    borderRadius: 8,
+    borderRadius: 11,
     backgroundColor: ICON_BG,
     alignItems: 'center',
     justifyContent: 'center',

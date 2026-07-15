@@ -8,6 +8,10 @@ import CollegeCornerScreen from './src/screens/Collegecornerscreen';
 import RORScreen from './src/screens/ROR';
 import PastYearPapersScreen from './src/screens/Past Year Papers';
 import FlagsScreen from './src/screens/Flags';
+import MorseCodeScreen from './src/screens/morsecode';
+import FreeTrialScreen from './src/screens/Freetrailscreen';
+import SSTPScreen from './src/screens/SSTP';
+import OnboardFamiliarizationScreen from './src/screens/OnboardScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +34,13 @@ export default function App() {
             <Stack.Screen name="ROR" component={RORScreen} />
             <Stack.Screen name="PastYearPapers" component={PastYearPapersScreen} />
             <Stack.Screen name="Flags" component={FlagsScreen} />
+            <Stack.Screen name="MorseCode" component={MorseCodeScreen} />
+            <Stack.Screen name="FreeTrial" component={FreeTrialScreen} />
+            <Stack.Screen name="SSTP" component={SSTPScreen} />
+            <Stack.Screen
+              name="OnboardFamiliarization"
+              component={OnboardFamiliarizationScreen}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

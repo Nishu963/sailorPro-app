@@ -11,7 +11,9 @@
     "start": "npm run dev:app",
     "dev:api": "cd api && npm run dev",
     "dev:app": "cd app && npm start",
-    "dev": "concurrently \"npm run dev:api\" \"npm run dev:app\""
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:app\"",
+    "android": "cd app && npm run android",
+    "ios": "cd app && npm run ios"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
@@ -20,7 +22,8 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-web": "0.21.2"
+    "react-native-web": "0.21.2",
+    "metro-runtime": "0.82.0"
   },
   "dependencies": {
     "expo-dev-client": "~6.0.21",

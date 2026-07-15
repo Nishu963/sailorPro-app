@@ -38,6 +38,10 @@ const COLORS = {
   cardShadow: '#98A2B3',
 };
 
+// Shared soft outline color for topic/program cards — lower opacity version of
+// the old solid '#D9DFFF' border, so the outline reads as subtle instead of harsh.
+const SOFT_INDIGO_BORDER = 'rgba(89, 118, 232, 0.08)';
+
 const TOPICS = [
   {
     id: 'ror',
@@ -46,7 +50,7 @@ const TOPICS = [
     icon: 'book-open',
     color: '#5876E8',
     tint: '#EEF0FF',
-    iconBorder: '#D9DFFF',
+    iconBorder: SOFT_INDIGO_BORDER,
   },
   {
     id: 'papers',
@@ -55,7 +59,7 @@ const TOPICS = [
     icon: 'file-text',
     color: '#5876E8',
     tint: '#EEF0FF',
-    iconBorder: '#D9DFFF',
+    iconBorder: SOFT_INDIGO_BORDER,
   },
   {
     id: 'flags',
@@ -64,41 +68,45 @@ const TOPICS = [
     icon: 'flag',
     color: '#5876E8',
     tint: '#EEF0FF',
-    iconBorder: '#D9DFFF',
+    iconBorder: SOFT_INDIGO_BORDER,
   },
   {
     id: 'morse',
     title: 'Morse Code',
+    routeName: 'MorseCode',
     icon: 'radio',
     color: '#5876E8',
     tint: '#EEF0FF',
-    iconBorder: '#D9DFFF',
+    iconBorder: SOFT_INDIGO_BORDER,
   },
   {
     id: 'videos',
     title: 'Free Trial Videos',
+    routeName: 'FreeTrial',
     icon: 'play-circle',
     color: '#5876E8',
     tint: '#EEF0FF',
-    iconBorder: '#D9DFFF',
+    iconBorder: SOFT_INDIGO_BORDER,
   },
   {
     id: 'sstp',
     title: 'SSTP (Structured Shipboard Training Programme)',
+    routeName: 'SSTP',
     icon: 'box',
     color: '#5876E8',
     tint: '#EEF0FF',
-    iconBorder: '#D9DFFF',
+    iconBorder: SOFT_INDIGO_BORDER,
   },
 ];
 
 const FULL_WIDTH_ITEM = {
   id: 'onboard',
   title: 'Onboard Familiarization (FREE - Common Module)',
+  routeName: 'OnboardFamiliarization',
   icon: 'play-circle',
   color: '#5876E8',
   tint: '#EEF0FF',
-  iconBorder: '#D9DFFF',
+  iconBorder: SOFT_INDIGO_BORDER,
 };
 
 export default function CollegeCornerScreen({ navigation }) {
@@ -238,7 +246,10 @@ export default function CollegeCornerScreen({ navigation }) {
                   onPress={topic.routeName ? () => navigation?.navigate?.(topic.routeName) : undefined}
                 />
               ))}
-              <TopicCard topic={FULL_WIDTH_ITEM} />
+              <TopicCard
+                topic={FULL_WIDTH_ITEM}
+                onPress={() => navigation?.navigate?.(FULL_WIDTH_ITEM.routeName)}
+              />
             </View>
           </View>
         </View>
@@ -253,7 +264,7 @@ function TopicCard({ topic, onPress }) {
       onPress={onPress}
       style={({ pressed }) => [
         styles.topicCard,
-        { borderColor: topic.iconBorder, shadowColor: topic.color },
+        { borderColor: topic.iconBorder },
         pressed && styles.cardPressed,
       ]}
     >
@@ -441,7 +452,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.border,
   },
 
-  // DNS "active tab" — purple theme (matches topic cards), larger than list cards — UNCHANGED
+  // DNS "active tab" — purple theme (matches topic cards), larger than list cards.
+  // Outline now uses the soft rgba indigo border instead of the solid '#D9DFFF'.
   programCard: {
     position: 'relative',
     overflow: 'hidden',
@@ -454,11 +466,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
 
     borderWidth: 1.5,
-    borderColor: '#D9DFFF',
+    borderColor: SOFT_INDIGO_BORDER,
     backgroundColor: COLORS.white,
 
-    shadowColor: '#5876E8',
-    shadowOpacity: 0.22,
+    shadowColor: COLORS.cardShadow,
+    shadowOpacity: 0.08,
     shadowRadius: 18,
     shadowOffset: { width: 0, height: 9 },
     elevation: 5,
@@ -484,7 +496,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#EEF0FF',
     borderWidth: 1,
-    borderColor: '#D9DFFF',
+    borderColor: SOFT_INDIGO_BORDER,
   },
 
   programTextWrap: {
@@ -536,7 +548,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#EEF0FF',
     borderWidth: 1,
-    borderColor: '#D9DFFF',
+    borderColor: SOFT_INDIGO_BORDER,
   },
 
   totalPillText: {
@@ -553,7 +565,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#EEF0FF',
     borderWidth: 1,
-    borderColor: '#D9DFFF',
+    borderColor: SOFT_INDIGO_BORDER,
   },
 
   topicList: {
@@ -563,7 +575,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  // Topic cards — fancy styling restored: glow blob, nested icon box, per-topic colored border/shadow
+  // Topic cards — fancy styling restored: glow blob, nested icon box, per-topic colored border/shadow.
+  // borderColor for these comes from topic.iconBorder (now SOFT_INDIGO_BORDER) at render time.
   topicCard: {
     position: 'relative',
     overflow: 'hidden',
@@ -578,6 +591,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.3,
     backgroundColor: COLORS.white,
 
+    shadowColor: COLORS.cardShadow,
     shadowOpacity: 0.14,
     shadowRadius: 11,
     shadowOffset: { width: 0, height: 5 },

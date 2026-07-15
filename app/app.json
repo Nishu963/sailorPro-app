@@ -4,7 +4,22 @@
     "slug": "mmd-exam-app",
     "version": "1.0.0",
     "sdkVersion": "54.0.0",
-    "platforms": ["ios", "android", "web"],
-    "assetBundlePatterns": ["**/*"]
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.nishu123.mmdexamapp"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "be1b879b-a1b5-4149-b978-bdc699d9d8d5"
+      }
+    },
+    "owner": "nishu-123"
   }
 }
